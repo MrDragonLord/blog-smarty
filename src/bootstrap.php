@@ -6,13 +6,14 @@ use App\Database;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Support\View;
+use Smarty\Smarty;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $config = require __DIR__ . '/../config/config.php';
 
 $pdo = Database::make($config['db']);
-$smarty = new \Smarty\Smarty();
+$smarty = new Smarty();
 $projectRoot = dirname(__DIR__);
 $runtimeCacheRoot = $projectRoot . '/var/cache';
 
@@ -34,7 +35,7 @@ $smarty->setTemplateDir($projectRoot . '/templates');
 $smarty->setCompileDir($compileDir);
 $smarty->setCacheDir($templateCacheDir);
 $smarty->setConfigDir($configCacheDir);
-$smarty->setCaching(false);
+$smarty->setCaching(Smarty::CACHING_OFF);
 
 $view = new View($smarty);
 $categoryRepository = new CategoryRepository($pdo);
