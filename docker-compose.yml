@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: blog-smarty-app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: blog_smarty
+      DB_USER: root
+      DB_PASSWORD: root
+      APP_BASE_URL: http://localhost:8080
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.4
+    container_name: blog-smarty-db
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: blog_smarty
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+volumes:
+  db_data:

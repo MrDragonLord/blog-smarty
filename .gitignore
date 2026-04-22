@@ -1,0 +1,12 @@
+/vendor/
+/node_modules/
+/.idea/
+/.env
+/var/cache/templates/*
+/var/cache/compile/*
+/var/cache/config/*
+/var/cache/output/*
+!/var/cache/templates/.gitkeep
+!/var/cache/compile/.gitkeep
+!/var/cache/config/.gitkeep
+!/var/cache/output/.gitkeep

@@ -1,0 +1,12 @@
+{
+  "name": "blog-smarty",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build:css": "sass assets/scss/style.scss public/assets/css/style.css --style=compressed --no-source-map",
+    "watch:css": "sass --watch assets/scss/style.scss:public/assets/css/style.css --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.99.0"
+  }
+}
