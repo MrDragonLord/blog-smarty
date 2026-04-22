@@ -16,18 +16,13 @@ $pdo = Database::make($config['db']);
 $smarty = new Smarty();
 $projectRoot = dirname(__DIR__);
 $runtimeCacheRoot = $projectRoot . '/var/cache';
-
-if (!is_dir($runtimeCacheRoot) || !is_writable($runtimeCacheRoot)) {
-    $runtimeCacheRoot = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . '/blog-smarty-cache';
-}
-
 $compileDir = $runtimeCacheRoot . '/compile';
 $templateCacheDir = $runtimeCacheRoot . '/templates';
 $configCacheDir = $runtimeCacheRoot . '/config';
 
 foreach ([$compileDir, $templateCacheDir, $configCacheDir] as $cacheDir) {
-    if (!is_dir($cacheDir)) {
-        mkdir($cacheDir, 0775, true);
+    if (!is_dir($cacheDir) && !mkdir($cacheDir, 0775, true) && !is_dir($cacheDir)) {
+        throw new RuntimeException(sprintf('Unable to create cache directory: %s', $cacheDir));
     }
 }
 
